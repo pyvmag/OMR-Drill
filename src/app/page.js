@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Plus, Trash2, ArrowLeft, Check, X, Clock, AlertTriangle } from "lucide-react";
 
@@ -42,8 +42,8 @@ export default function OmrDrillApp() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await window.storage.get("mocks-data", false);
-        if (res && res.value) setMocks(JSON.parse(res.value));
+        const res = window.localStorage.getItem("mocks-data");
+        if (res) setMocks(JSON.parse(res));
       } catch (e) {
         // no saved mocks yet
       }
@@ -54,7 +54,7 @@ export default function OmrDrillApp() {
   const persist = async (updated) => {
     setMocks(updated);
     try {
-      await window.storage.set("mocks-data", JSON.stringify(updated), false);
+      window.localStorage.setItem("mocks-data", JSON.stringify(updated));
     } catch (e) {
       console.error("storage save failed", e);
     }
